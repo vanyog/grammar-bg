@@ -28,11 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "grammar.h"
 
 // Директория с данни
-#ifdef Q_WS_MAC
-QString dataDir = "../../../data";
-#else
 QString dataDir = "data";
-#endif
 
 int main(int argc, char *argv[])
 {

@@ -2,3 +2,6 @@ object_script.*
 Makefile*
 ui_*
 release/*.*
+*.o
+*.app
+moc_*.cpp
