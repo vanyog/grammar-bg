@@ -1,0 +1,4 @@
+object_script.*
+Makefile*
+ui_*
+release/*.*
