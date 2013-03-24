@@ -55,22 +55,27 @@ MyMainWindow::MyMainWindow(QWidget *parent)
    connect(ui.comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTabChanged(int)) );
    connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(onToolsContinueSpelling()) );
 
-// меню
+// File
    connect(ui.actionSave_as, SIGNAL(triggered()), this, SLOT(onFileSaveAs()) );
    connect(ui.actionOpen_dat_file, SIGNAL(triggered()), this, SLOT(onFileOpenDat()) );
    connect(ui.actionExplore_data_directory, SIGNAL(triggered()), this, SLOT(onFileExploreData()) );
    connect(ui.actionDelete_Index_Files, SIGNAL(triggered()), this, SLOT(onFileDeleteIndexFiles()) );
    connect(ui.actionLoad_IDI_Dictionary, SIGNAL(triggered()), this, SLOT(onFileIDIDic()) );
 
+// Edit
    connect(ui.action_Search, SIGNAL(triggered()), this, SLOT(onEditSearch()) );
 
+// Settings
    connect(ui.actionFont, SIGNAL(triggered()), this, SLOT(onFontAction()) );
    connect(ui.actionAutoCSpellcheck, SIGNAL(triggered()), this, SLOT(onAutoCSPellcheck()) );
 
-   connect(ui.action_Spell_check_the_clipboard, SIGNAL(triggered()), this, SLOT(onToolsSpellCheckClipboard()) );
+// Tools
    connect(ui.action_Spell_check_file, SIGNAL(triggered()), this, SLOT(onToolsSpellCheckFile()) );
+   connect(ui.actionSpell_check_file_UTF_8, SIGNAL(triggered()), this, SLOT(onToolsSpellCheckFileUtf8()) );
+   connect(ui.action_Spell_check_the_clipboard, SIGNAL(triggered()), this, SLOT(onToolsSpellCheckClipboard()) );
    connect(ui.actionContinue_check, SIGNAL(triggered()), this, SLOT(onToolsContinueSpelling()) );
 
+// Help
    connect(ui.actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()) );
    connect(ui.actionAbout_Program, SIGNAL(triggered()), this, SLOT(onAboutPr()) );
    connect(ui.actionDictionary_Info, SIGNAL(triggered()), this, SLOT(onDictionaryInfo()) );
@@ -182,11 +187,10 @@ void MyMainWindow::spellCheckFile(){
    if (a.size()>1) spellCheckFile(a.at(1));
 };
 
-void MyMainWindow::spellCheckFile(const QString &fn){
+void MyMainWindow::spellCheckFile(const QString &fn, const QString &codec){
       QFile file(fn);
       if (file.exists()){
-         QString fc = fileContent(file.fileName());
-//         showMessage(fc);
+         QString fc = fileContent(file.fileName(),codec);
          ui.textBrowser->setPlainText(fc);
          ui.comboBox->setCurrentIndex(3);
          onToolsContinueSpelling();
@@ -397,6 +401,11 @@ void MyMainWindow::onToolsSpellCheckClipboard(){
 void MyMainWindow::onToolsSpellCheckFile(){
    QString fn = QFileDialog::getOpenFileName(this);
    spellCheckFile(fn);
+};
+
+void MyMainWindow::onToolsSpellCheckFileUtf8(){
+   QString fn = QFileDialog::getOpenFileName(this);
+   spellCheckFile(fn,"UTF-8");
 };
 
 void MyMainWindow::onToolsContinueSpelling(){

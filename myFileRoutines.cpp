@@ -58,7 +58,6 @@ QString myStatusDir(const QString &fn){
 
 QString fileContent(const QString &fn, const QString &codec){
    QFile file(fn);
-//   showMessage(fn);
    if (!file.open(QFile::ReadOnly | QFile::Text)) {
       showMessage(QApplication::tr("Cannot read file %1:\n%2.")
          .arg(fn)

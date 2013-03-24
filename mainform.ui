@@ -210,7 +210,7 @@
      <x>0</x>
      <y>0</y>
      <width>588</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -249,6 +249,7 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="action_Spell_check_file"/>
+    <addaction name="actionSpell_check_file_UTF_8"/>
     <addaction name="action_Spell_check_the_clipboard"/>
     <addaction name="actionContinue_check"/>
    </widget>
@@ -312,7 +313,7 @@
   </action>
   <action name="action_Spell_check_file">
    <property name="text">
-    <string>Spell check file</string>
+    <string>Spell check file (Windows 1251)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -353,6 +354,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionSpell_check_file_UTF_8">
+   <property name="text">
+    <string>Spell check file (UTF-8)</string>
    </property>
   </action>
  </widget>

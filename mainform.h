@@ -38,7 +38,7 @@ public:
    LangDictionary langDic, idiDic;
    MyMainWindow(QWidget *parent = 0);
    void spellCheckFile();
-   void spellCheckFile(const QString &fn);
+   void spellCheckFile(const QString &fn, const QString &codec = "cp1251");
 
 public slots:
    void changeRootsAndForms(bool yes);
@@ -79,8 +79,9 @@ private slots:
    void onEditSearch();
    void onFontAction();
    void onAutoCSPellcheck();
-   void onToolsSpellCheckClipboard();
    void onToolsSpellCheckFile();
+   void onToolsSpellCheckFileUtf8();
+   void onToolsSpellCheckClipboard();
    void onToolsContinueSpelling();
    void onToolsReplace();
 };
