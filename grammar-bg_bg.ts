@@ -121,7 +121,7 @@
         <translation type="obsolete">Настройки</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="263"/>
+        <location filename="mainform.ui" line="264"/>
         <source>Font</source>
         <translation>Шрифт</translation>
     </message>
@@ -130,12 +130,12 @@
         <translation type="obsolete">Помощ</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="268"/>
+        <location filename="mainform.ui" line="269"/>
         <source>About Qt</source>
         <translation>Относно Qt</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="273"/>
+        <location filename="mainform.ui" line="274"/>
         <source>About &amp;Program</source>
         <translation>За &amp;програмата</translation>
     </message>
@@ -145,7 +145,7 @@
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="278"/>
+        <location filename="mainform.ui" line="279"/>
         <source>Save &amp;as</source>
         <translation>Записване &amp;като</translation>
     </message>
@@ -155,7 +155,7 @@
         <translation>&amp;Редактиране</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="283"/>
+        <location filename="mainform.ui" line="284"/>
         <source>&amp;Search</source>
         <translation>&amp;Търсене</translation>
     </message>
@@ -204,34 +204,39 @@
         <translation>&amp;Инструменти</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="291"/>
+        <location filename="mainform.ui" line="292"/>
         <source>&amp;Spell check the clipboard</source>
         <translation>&amp;Правописна проверка на клипборда</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="315"/>
+        <location filename="mainform.ui" line="316"/>
         <source>Spell check file (Windows 1251)</source>
-        <translation>Проверяване на текст (Windows 1251)</translation>
+        <translation>Правописна проверка на файл (Windows 1251)</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="342"/>
+        <location filename="mainform.ui" line="343"/>
         <source>F4</source>
         <translation>F4</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="347"/>
+        <location filename="mainform.ui" line="348"/>
         <source>Delete Index Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Изтриване на индексните файлове</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="352"/>
+        <location filename="mainform.ui" line="353"/>
         <source>Load IDI Dictionary</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареждане на IDI Dictionary</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="355"/>
+        <location filename="mainform.ui" line="356"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
+    </message>
+    <message>
+        <location filename="mainform.ui" line="361"/>
+        <source>Spell check file (UTF-8)</source>
+        <translation>Правописна проверка на файл (UTF-8)</translation>
     </message>
     <message>
         <location filename="mainform.ui" line="142"/>
@@ -239,17 +244,17 @@
         <translation>Продължи</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="294"/>
+        <location filename="mainform.ui" line="295"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="299"/>
+        <location filename="mainform.ui" line="300"/>
         <source>Continue spell checking</source>
         <translation>Продължаване на правописната проверка</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="302"/>
+        <location filename="mainform.ui" line="303"/>
         <source>Ctrl+Right</source>
         <translation>Ctrl+Right</translation>
     </message>
@@ -259,17 +264,17 @@
         <translation>Замени</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="286"/>
+        <location filename="mainform.ui" line="287"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="307"/>
+        <location filename="mainform.ui" line="308"/>
         <source>Open .&amp;dat file</source>
         <translation>Отваряне на .&amp;dat файла</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="310"/>
+        <location filename="mainform.ui" line="311"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
@@ -278,22 +283,22 @@
         <translation type="obsolete">Проверка на правописа на файл</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="318"/>
+        <location filename="mainform.ui" line="319"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="329"/>
+        <location filename="mainform.ui" line="330"/>
         <source>Automatic clipboard spellcheck</source>
         <translation>Автоматична проверка на клипборда</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="334"/>
+        <location filename="mainform.ui" line="335"/>
         <source>Dictionary Info</source>
         <translation>Информация за речника</translation>
     </message>
     <message>
-        <location filename="mainform.ui" line="339"/>
+        <location filename="mainform.ui" line="340"/>
         <source>Explore data directory</source>
         <translation>Отваряне директорията с .dat файла</translation>
     </message>
@@ -301,65 +306,65 @@
 <context>
     <name>MyMainWindow</name>
     <message>
-        <location filename="mainform.cpp" line="93"/>
-        <location filename="mainform.cpp" line="318"/>
+        <location filename="mainform.cpp" line="98"/>
+        <location filename="mainform.cpp" line="323"/>
         <source>%1 words</source>
         <translation>%1 думи</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="142"/>
+        <location filename="mainform.cpp" line="147"/>
         <source>Saving status...</source>
         <translation>Записване на опциите...</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="101"/>
+        <location filename="mainform.cpp" line="106"/>
         <source>Saving files...</source>
         <translation>Записване на файловете...</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="228"/>
+        <location filename="mainform.cpp" line="233"/>
         <source>No word is selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не е избрана дума</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="234"/>
+        <location filename="mainform.cpp" line="239"/>
         <source>Ward to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Дума за добавяне</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="234"/>
+        <location filename="mainform.cpp" line="239"/>
         <source>in the same group with &lt;strong&gt;%1&lt;/strong&gt;: </source>
-        <translation type="unfinished"></translation>
+        <translation>в същага таблица с &lt;strong&gt;%1&lt;/strong&gt;: </translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="278"/>
+        <location filename="mainform.cpp" line="283"/>
         <source>grammar-bg v%1&lt;br&gt;Copyright (C) 2006  Vanyo Georgiev &amp;lt;&lt;A HREF=mailto:info@vanyog.com&gt;info@vanyog.com&lt;/A&gt;&amp;gt;&lt;br&gt;&lt;A HREF=%2&gt;%2&lt;/A&gt;&lt;br&gt;&lt;br&gt;This program is free software; you can redistribute it and/or&lt;br&gt;modify it under the terms of the GNU General Public License&lt;br&gt;as published by the Free Software Foundation; either version 2&lt;br&gt;of the License, or (at your option) any later version.&lt;br&gt;&lt;br&gt;This program is distributed in the hope that it will be useful,&lt;br&gt;but WITHOUT ANY WARRANTY; without even the implied warranty of&lt;br&gt;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&lt;br&gt;GNU General Public License for more details.&lt;br&gt;&lt;br&gt;You should have received a copy of the GNU General Public License&lt;br&gt;along with this program; if not, write to the Free Software&lt;br&gt;&lt;br&gt;Foundation, Inc., 51 Franklin Street, Fifth Floor,&lt;BR&gt;Boston, MA  02110-1301, USA.</source>
         <translation>grammar-bg %1&lt;br&gt;Авторски права (C) 2007 Ваньо Георгиев &amp;lt;&lt;A HREF=mailto:info@vanyog.com&gt;info@vanyog.com&lt;/A&gt;&amp;gt;&lt;br&gt;&lt;A HREF=%2&gt;%2&lt;/A&gt;&lt;br&gt;&lt;br&gt;Това е програма с отворен код; Вие можете да я разпространявате и/или променяте съгласно изискванията на Общото право за публично ползване GNU, както е публикувано от Фондацията за свободен софтуер, във версия 2 или (по Ваш избор) по-следваща.&lt;br&gt;&lt;br&gt;Тази програма се разпространява с надежда, че може да бъде полезна, но БЕЗ НИКАКВИ ГАРАНЦИИ; включително, но не само, без подразбиращите се гаранции за ПРОДАВАЕМОСТ или ПРИГОДНОСТ ЗА КОНКРЕТНА УПОТРЕБА. За повече подробности разгледайте Общото право за публично ползване GNU.&lt;br&gt;&lt;br&gt;Вие трябва да сте получили копие от Общото право за публично ползване с тази програма; ако не сте се обърнете към:&lt;br&gt;&lt;br&gt;Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,&lt;BR&gt;Boston, MA 02110-1301, USA.</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="287"/>
+        <location filename="mainform.cpp" line="292"/>
         <source>Save as</source>
         <translation>Записване като</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="287"/>
+        <location filename="mainform.cpp" line="292"/>
         <source>Text files (*.txt)</source>
         <translation>Текстови файлове (*.txt)</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="295"/>
+        <location filename="mainform.cpp" line="300"/>
         <source>Writing...</source>
         <translation>Записване...</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="320"/>
+        <location filename="mainform.cpp" line="325"/>
         <source>Can&apos;t write to file:&lt;br&gt;%1</source>
         <translation>Не може да се записва във файл:&lt;br&gt;%1</translation>
     </message>
     <message>
-        <location filename="mainform.cpp" line="374"/>
+        <location filename="mainform.cpp" line="379"/>
         <source>Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареден</translation>
     </message>
 </context>
 <context>
@@ -397,7 +402,7 @@
     <message>
         <location filename="grammar.cpp" line="285"/>
         <source>No more spelling mistakes found.</source>
-        <translation>Няма повече грешки.</translation>
+        <translation>Правописна проверка на файл (Windows 1251)</translation>
     </message>
     <message>
         <location filename="grammar.cpp" line="286"/>
@@ -416,7 +421,8 @@
         <location filename="myFileRoutines.cpp" line="97"/>
         <source>Cannot write to file: %1.
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можа да се записва във файл: %1.
+%2</translation>
     </message>
     <message>
         <location filename="grammar.cpp" line="289"/>

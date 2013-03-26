@@ -187,6 +187,9 @@ void MyMainWindow::spellCheckFile(){
    if (a.size()>1) spellCheckFile(a.at(1));
 };
 
+// Проверяване на файл с име fn и кодировка codec
+// по подразбиране кодировката е "cp1251"
+
 void MyMainWindow::spellCheckFile(const QString &fn, const QString &codec){
       QFile file(fn);
       if (file.exists()){
@@ -408,6 +411,7 @@ void MyMainWindow::onToolsSpellCheckFileUtf8(){
    spellCheckFile(fn,"UTF-8");
 };
 
+// Изпълнява се при щракване на бутона "Продължаване"
 void MyMainWindow::onToolsContinueSpelling(){
    if (ui.comboBox->currentIndex()!=3) return;
    QString s = ui.textBrowser->toPlainText();

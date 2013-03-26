@@ -191,6 +191,10 @@
            <property name="enabled">
             <bool>true</bool>
            </property>
+           <property name="styleSheet">
+            <string notr="true">selection-color: rgb(52, 12, 255);
+selection-background-color: rgb(19, 255, 3);</string>
+           </property>
            <property name="frameShape">
             <enum>QFrame::Box</enum>
            </property>
