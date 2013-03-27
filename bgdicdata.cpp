@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include <QString>
+#include <QTextCodec>
 
 #include "grammar.h"
 #include "showMessage.h"
@@ -108,18 +109,16 @@ void loadTableProps(){
     if (p->size()==5){
       int j = p->at(1).toInt(); // Номер на таблицата
       int k = p->at(2).toInt(); // Номер на група свойства
-      tableP[j] = forms.value(k);
-      WordForms *w = tables.value(j); // Списък на формите от таблицата
-//      for(int l=0; l<w->size(); l++){ // Добавяне към всяка форма на общите свойства
-//        w->at(l)->insert(0,forms.value(k)); 
-//      }
+      Thing *t = new ThingNamedValue("Таблица",QString::number(j));
+      tableP[j] = t;
+      tableP[j]->append(forms.value(k));
     }
   }
 }
 
-// Зареждане на основните форми на думите от файл w_words.csv
-void loadMainForms(){
-  QString fn = dD+"/w_words.csv";
+// Зареждане на основните форми на думите от файл w_words.csv или от друг файл
+void loadMainForms(const QString &f = "w_words.csv"){
+  QString fn = dD+"/"+f;
   cDic->setLastModified(QFileInfo(fn).lastModified());
   QStringList fc = fileContent(fn,"UTF-8").split("\n");
   for(int i=0; i<fc.size(); i++){
@@ -137,11 +136,13 @@ void loadMainForms(){
 void loadTo(const QString &dicDir, LangDictionary *langDic){
   dD = dicDir; 
   cDic = langDic;
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
   loadProps(); //showMessage(props.size());
   loadForms(); //showMessage(forms.size());
   loadTables(); //showMessage(tables.size());
   loadTableProps(); //showMessage(tableP.size());
   loadMainForms();
+  loadMainForms("w_words_local.csv");
 };
 
 };

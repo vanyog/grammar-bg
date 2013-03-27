@@ -93,7 +93,6 @@ WordRootFormPairList * MyMainWindow::rfpList(){
 
 void MyMainWindow::changeRootsAndForms(bool yes){
    LangDicModel *model = new LangDicModel(rfpList());
-//   return;
    llView->listView()->setModel(model);
    statusBar()->showMessage( tr("%1 words")
       .arg(QString::number(rfpList()->size())) );
@@ -129,6 +128,7 @@ void MyMainWindow::showByTab(int tab, int i){
    QString w;
    switch (tab){
    case 0:  // Морфология
+   case 3:  // Правопис
       showInfo(cRfp->formIndex());
       showFormList();
       break;
@@ -151,8 +151,9 @@ void MyMainWindow::writeSettings(){
    settings->setValue("fontPointSize",font().pointSize());
    settings->setValue("fontWeight",font().weight());
    settings->setValue("fontItalic",font().italic());
+   settings->setValue("sp3State",ui.splitter_3->saveState());
    settings->setValue("sp2State",ui.splitter_2->saveState());
-   settings->setValue("spState",ui.splitter->saveState());
+   settings->setValue("sp1State",ui.splitter->saveState());
    settings->setValue("tabIndex",ui.comboBox->currentIndex());
    settings->setValue("autoCSpellcheck",ui.actionAutoCSpellcheck->isChecked());
    settings->setValue("lastWord",llView->lineEdit()->text());
@@ -167,8 +168,9 @@ void MyMainWindow::readSettings(){
       settings->value("fontWeight").toInt(),
       settings->value("fontItalic").toBool()
    ));
+   ui.splitter_3->restoreState(settings->value("sp3State").toByteArray());
    ui.splitter_2->restoreState(settings->value("sp2State").toByteArray());
-   ui.splitter->restoreState(settings->value("spState").toByteArray());
+   ui.splitter  ->restoreState(settings->value("sp1State").toByteArray());
    int i = settings->value("tabIndex").toInt();
    ui.comboBox->setCurrentIndex(i);
    onTabChanged(i);
@@ -182,6 +184,8 @@ void MyMainWindow::readSettings(){
 //   onWordEditChanged(w);
 };
 
+// Проверяване на файла, чието име и изпратено в променлива на обкръжението
+
 void MyMainWindow::spellCheckFile(){
    QStringList a = qApp->arguments();
    if (a.size()>1) spellCheckFile(a.at(1));
@@ -194,7 +198,7 @@ void MyMainWindow::spellCheckFile(const QString &fn, const QString &codec){
       QFile file(fn);
       if (file.exists()){
          QString fc = fileContent(file.fileName(),codec);
-         ui.textBrowser->setPlainText(fc);
+         ui.textBrowser_2->setPlainText(fc);
          ui.comboBox->setCurrentIndex(3);
          onToolsContinueSpelling();
       }
@@ -241,7 +245,10 @@ void MyMainWindow::onAddButtonPressed(){
    QString w = QInputDialog::getText(this, 
      tr("Ward to add"), tr("in the same group with <strong>%1</strong>: ").arg(w0), QLineEdit::Normal, "", &ok);
    if (!ok || !w.size()) return;
-   QString fn = cRoot->value(QString::fromUtf8("таблица"));
+   QString fn = cRoot->value(QString::fromUtf8("Таблица"));
+   return;
+   
+   //------------------
    QStringList fc = fileContent(fn).split("\n");
    QString ln0 = "";
    QString ln  = "";
@@ -414,17 +421,17 @@ void MyMainWindow::onToolsSpellCheckFileUtf8(){
 // Изпълнява се при щракване на бутона "Продължаване"
 void MyMainWindow::onToolsContinueSpelling(){
    if (ui.comboBox->currentIndex()!=3) return;
-   QString s = ui.textBrowser->toPlainText();
-   QTextCursor tc = ui.textBrowser->textCursor();
+   QString s = ui.textBrowser_2->toPlainText();
+   QTextCursor tc = ui.textBrowser_2->textCursor();
    SpellingMistake sm = langDic.findMistake(s,tc.position());
    if (sm.mistakeType != SpellingMistake::NoMistake){
      tc.setPosition(sm.start);
      tc.setPosition(sm.end,QTextCursor::KeepAnchor);
      llView->lineEdit()->setText(sm.text);
-     ui.textBrowser->setTextCursor(tc);
+     ui.textBrowser_2->setTextCursor(tc);
      QApplication::clipboard()->setText(sm.text);
    }
-   else ui.textBrowser->moveCursor(QTextCursor::Start);
+   else ui.textBrowser_2->moveCursor(QTextCursor::Start);
    showStatus( sm.note() );
 };
 
