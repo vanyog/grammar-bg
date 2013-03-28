@@ -242,13 +242,17 @@ void MyMainWindow::onAddButtonPressed(){
    }
    QString w0 = cRoot->word();
    bool ok;
-   QString w = QInputDialog::getText(this, 
-     tr("Ward to add"), tr("in the same group with <strong>%1</strong>: ").arg(w0), QLineEdit::Normal, "", &ok);
+   QString w = ui.textBrowser_2->textCursor().selectedText();
+   w = QInputDialog::getText(this, 
+     tr("Ward to add"), tr("in the same group with <strong>%1</strong>: ").arg(w0), QLineEdit::Normal, w, &ok);
    if (!ok || !w.size()) return;
-   QString fn = cRoot->value(QString::fromUtf8("Таблица"));
-   return;
+   QString t = cRoot->value(QString::fromUtf8("Таблица"));
+   QString l = "\"0\",\""+w+"\",\""+t+"\",NULL,\"0\"\n";
+   appendToFile("data/w_words_local.csv",l,"UTF-8");
+   showMessage(l); return;
    
-   //------------------
+
+/*
    QStringList fc = fileContent(fn).split("\n");
    QString ln0 = "";
    QString ln  = "";
@@ -267,6 +271,7 @@ void MyMainWindow::onAddButtonPressed(){
    ln = fc.join("\n");
    saveToFile(fn,ln);
    wordAdded = true;
+*/
 };
 
 void MyMainWindow::onTabChanged(int tab){
@@ -403,7 +408,7 @@ void MyMainWindow::onEditSearch(){
 
 void MyMainWindow::onToolsSpellCheckClipboard(){
    QString s = QApplication::clipboard()->text();
-   ui.textBrowser->setPlainText(s);
+   ui.textBrowser_2->setPlainText(s);
    ui.comboBox->setCurrentIndex(3);
    onToolsContinueSpelling();
 };

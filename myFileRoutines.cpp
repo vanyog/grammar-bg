@@ -108,3 +108,20 @@ void saveToFile(const QString &fn, const QString &fc, const QString &codec){
    QApplication::restoreOverrideCursor();
 };
 
+void appendToFile(const QString &fn, const QString &fc, const QString &codec){
+   QFile file(fn);
+   if (!file.open(QIODevice::Append | QFile::Text)) {
+      showMessage(QApplication::tr("Cannot write to file: %1.\n%2.")
+         .arg(fn)
+         .arg(file.errorString())
+      );
+      return;
+   }
+   QTextStream in(&file);
+   QApplication::setOverrideCursor(Qt::WaitCursor);
+   in.setCodec(QTextCodec::codecForName(codec.toLatin1()));
+   in << fc;
+   file.close();
+   QApplication::restoreOverrideCursor();
+};
+

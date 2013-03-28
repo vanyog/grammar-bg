@@ -5,3 +5,4 @@ release/*.*
 *.o
 *.app
 moc_*.cpp
+data/w_words_local.csv

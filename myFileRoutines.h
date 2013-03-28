@@ -31,5 +31,6 @@ QString fileContent(const QString &fn, const QString &codec = "cp1251");
 QString fileContent(QFile &fl, const QString &codec = "cp1251");
 
 void saveToFile(const QString &fn, const QString &fc, const QString &codec = "cp1251");
+void appendToFile(const QString &fn, const QString &fc, const QString &codec = "cp1251");
 
 #endif
