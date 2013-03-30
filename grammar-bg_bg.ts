@@ -402,7 +402,7 @@
     <message>
         <location filename="grammar.cpp" line="285"/>
         <source>No more spelling mistakes found.</source>
-        <translation>Правописна проверка на файл (Windows 1251)</translation>
+        <translation>Няма повече правописни грешки</translation>
     </message>
     <message>
         <location filename="grammar.cpp" line="286"/>

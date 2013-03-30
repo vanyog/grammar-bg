@@ -57,7 +57,7 @@ WordRoot::WordRoot(const QString &r, WordForms *wfs){
 WordRoot::~WordRoot(){};
 
 QString WordRoot::info(bool withList){
-   int n = 0; if (size()>1) n = 1;
+   int n = 0; // if (size()>1) n = 1;
    QString r = root + "<br>" + toString(); // { int i=r.indexOf("<br>"); r.insert(i," - "+root); }
    if (!withList) return r;
    if (r.size()) r.append("<br><br>");
@@ -95,14 +95,14 @@ QStringList *WordRoot::wordForms(){
    if (!size()) return 0;
    else {
       QStringList *wfs = new QStringList;
-      int n = 0; if (size()>1) n = 1;
+      int n = 0; // if (size()>1) n = 1;
       for (int i=n;i<size();i++) wfs->append(word(i));
       return wfs;
    }
 };
 
 WordForm* WordRoot::form(const QString &wf){
-   int n = 0; if (size()>1) n=1;
+   int n = 0; // if (size()>1) n=1;
    for(int i=n;i<wforms->size();i++)
       if (wf==word(i)) return form(i);
    return 0;
@@ -338,7 +338,9 @@ WordForm *LangDictionary::form(int i){
 WordForm *LangDictionary::form(const QString &w){
    int i = indexOfForm(w);
    if (i<0) return 0;
-   return formPairs()->at(i)->form();
+   QString w1 = rfpList->word(i);
+   if (w.toLower()==w1.toLower()) return formPairs()->at(i)->form();
+   else return 0;
 };
 
 WordRootFormPairList *LangDictionary::loadRFPList(const QString &fn){
@@ -412,7 +414,7 @@ QSet<WordForms *> *LangDictionary::wordFormSet(){
 };
 
 WordRootFormPairList *LangDictionary::rootPairs(){
-//   showMessage(size());
+//   showMessage("rootPairs "+QString::number(size()));
    if (rfpList0==0){
       rfpList0 = loadRFPList(rootsFileName);
       if (rfpList0->size()==0){
@@ -436,7 +438,7 @@ WordRootFormPairList *LangDictionary::formPairs(){
          showStatus(QApplication::tr("Creating form list..."));
          for(int i=0;i<size();i++){
             WordRoot *r = at(i);
-            int n=0; if (r->size()>1) n=1;
+            int n=0; //if (r->size()>1) n=1;
             for(int j=n; j<r->size(); j++){
                WordRootFormPair *rfp = new WordRootFormPair(r,r->form(j),i,j);
                rfpList->append(rfp);
@@ -462,6 +464,74 @@ void LangDictionary::setFormIndexFileName(const QString &fn){
    formsFileName = fn;
 }
    
+QString LangDictionary::forEachWord(const QString &t, QString (LangDictionary::*pf)(const QString &w) ){
+  QString r = t;
+  int i1 = -1, l = 0, n = 1;
+  for(int i = 0; i<t.size(); i++){
+    if (!language->isLetter(t.at(i))){
+      l = i-i1-1;
+      if (l) {
+        QString w = t.mid(i1+1,l);
+        w = (this->*pf)(w);
+        r.replace(i1+n, l, w);
+        n += w.size() - l;
+      }
+      i1=i;
+    } 
+  }
+  l = t.size()-i1-1;
+  if (l) {
+        QString w = t.mid(i1+1,l);
+        w = (this->*pf)(w);
+        r.replace(i1+n, l, w);
+        n += w.size() - l;
+  }
+  return r;
+};
+
+QString LangDictionary::spellCheckText(const QString &t){
+  QString r = t;
+  checkedWords.clear();
+  int i1 = -1, l = 0, n = 1;
+  for(int i = 0; i<t.size(); i++){
+    if (!language->isLetter(t.at(i))){
+      l = i-i1-1;
+      if (l) {
+        QString w = t.mid(i1+1,l);
+        checkedWords << w.toLower();
+        w = isCorrect(w);
+        r.replace(i1+n, l, w);
+        n += w.size() - l;
+      }
+      i1=i;
+    } 
+  }
+  l = t.size()-i1-1;
+  if (l) {
+        QString w = t.mid(i1+1,l);
+        checkedWords << w.toLower();
+        w = isCorrect(w);
+        r.replace(i1+n, l, w);
+        n += w.size() - l;
+  }
+  return r;
+};
+
+QString LangDictionary::isCorrect(const QString &w){
+  int i = indexOfForm(w);
+  QString w2 = "<span style=\"background-color:yellow;\">"+w+"</span>";
+  if ( (i<0) || (i>formPairs()->size()-1) ) return w2;
+  QString w1 = formPairs()->word(i);
+  if (w.toLower()!=w1.toLower()) return w2;
+  return w;
+};
+
+QString LangDictionary::hasPropertie(const QString &w){
+  WordForm *f = form(w);
+  if (f && f->is(valueToFind, nameToFind)) return "<span style=\"background-color:yellow;\">"+w+"</span>";
+  return w;
+};
+
 SpellingMistake::MistakeType LangDictionary::isWordCorrect(const QString &w){
    int i = indexOfForm(w);
    SpellingMistake::MistakeType r = SpellingMistake::NotAWord;

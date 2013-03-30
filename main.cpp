@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
     BGDicdata::loadTo(dataDir,&window.langDic);
 
     window.changeRootsAndForms(true);
+    window.setPList();
 
     window.spellCheckFile();
 

@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 #include "thing.h"
+#include "showMessage.h"
+
 
 //------Thing-------
 
@@ -42,6 +44,7 @@ QString Thing::value(const QString &n){
 
 bool Thing::is(const QString &v, const QString &n){
    bool r = ( (n.size()==0)||(n==name()) ) && (v==value());
+//   showMessage(name()+"="+value()+"<br>"+n+"="+v);
    if (r) return r;
    for(int i=0;i<size();i++){
       r = at(i)->is(v,n);

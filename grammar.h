@@ -143,15 +143,23 @@ public:
    WordRootFormPairList *rootPairs(); // създава или чете индекс на корените
    WordRootFormPairList *formPairs(); // създава или чете индекс на словоформите
    WordRootFormPairList *loadRFPList(const QString &fn); // чете индекси от файл fn
-   void saveFiles(); // записва индексите
+   void saveFiles();                              // записва индексите
    void setRootIndexFileName(const QString &fn); // Задава име на файла с индексите на корените
    void setFormIndexFileName(const QString &fn); // Задава име на файла с индексите на всички форми
+   QString forEachWord(const QString &t, QString (LangDictionary::*pf)(const QString &w) );
+   QString spellCheckText(const QString &t);     // В текста t загражда липсващите в речника думи в <span></span>
+   QString isCorrect(const QString &w);          // Ако думата w липсва в речника се загражда в <span></span>
+   QString hasPropertie(const QString &w);       // Ако думата w има свойство nameToFind=valueToFind се загражда в <span></span>
    SpellingMistake::MistakeType isWordCorrect(const QString &w); // проверява дали w е правилно изписана дума   
    SpellingMistake::MistakeType isSameWord(const QString &w, const QString &w0);  // проверява дали w и w1 са една и съща дума
    SpellingMistake findMistake(const QString &s, int i0 = 0);  // търси първата правописна грешка в текста s, започвайки от позиция i0
    bool isAbreviation(const QString &w, QChar pm); // връща true ако w е съкращение на дума, pm е знака след w, трябва да е "."
    bool towWords(const QString &w); // проверява дали w са две слепени думи
    HumanLanguage *language;  // обект представящ езика
+   QHash<QString, QSet<QString> > *pHash; // Хеш от множества с възможни стойности на свойствана думите
+   QSet<QString> checkedWords;
+   QString valueToFind;
+   QString nameToFind;
 private:
    WordRootFormPairList *rfpList, *rfpList0;
    QStringList *rList; // списък на основните форми

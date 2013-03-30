@@ -51,6 +51,8 @@ MyMainWindow::MyMainWindow(QWidget *parent)
    connect(llView->listView(), SIGNAL(clicked(QModelIndex)), this, SLOT(onWordClicked(QModelIndex)) );
    connect(ui.listView, SIGNAL(clicked(QModelIndex)), this, SLOT(onWordFormClicked(QModelIndex)) );
    connect(ui.pushButton_3, SIGNAL(pressed()), this, SLOT(onAddButtonPressed()));
+   connect(ui.pushButton_4, SIGNAL(pressed()), this, SLOT(onFindButtonPressed()));
+   connect(ui.comboBox_2, SIGNAL(currentIndexChanged(QString)), this, SLOT(onPNameChanged(QString)));
 
    connect(ui.comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTabChanged(int)) );
    connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(onToolsContinueSpelling()) );
@@ -92,10 +94,12 @@ WordRootFormPairList * MyMainWindow::rfpList(){
 };
 
 void MyMainWindow::changeRootsAndForms(bool yes){
+  if (yes){
    LangDicModel *model = new LangDicModel(rfpList());
    llView->listView()->setModel(model);
    statusBar()->showMessage( tr("%1 words")
       .arg(QString::number(rfpList()->size())) );
+  }
 };
 
 //---------private----------
@@ -109,8 +113,9 @@ void MyMainWindow::closeEvent(QCloseEvent *event){
 
 void MyMainWindow::showInfo(int i){
    cRoot = cRfp->root();
-   QString tx = cRoot->info();
-   if (i>0) tx.append("<BR><BR>").append(cRoot->form(i)->info());
+   QString tx = cRoot->form(i)->info();
+//   QString tx = cRoot->info();
+//   if (i>0) tx.append("<BR><BR>").append(cRoot->form(i)->info());
    ui.textBrowser->setHtml(tx);
 };
 
@@ -143,7 +148,7 @@ void MyMainWindow::showByTab(int tab, int i){
    }
 };
 
-void MyMainWindow::writeSettings(){
+void MyMainWindow::writeSettings(){ // showMessage("Write Settings");
    statusBar()->showMessage(tr("Saving status..."));
    QSettings *settings = new QSettings("VanyoG","grammar-bg");
    settings->setValue("mainWindowGeometry",saveGeometry());
@@ -191,6 +196,12 @@ void MyMainWindow::spellCheckFile(){
    if (a.size()>1) spellCheckFile(a.at(1));
 };
 
+void MyMainWindow::setPList(){
+   QStringList nl = langDic.pHash->keys();
+   nl.sort();
+   ui.comboBox_2->setModel(new QStringListModel(nl));
+};
+
 // Проверяване на файл с име fn и кодировка codec
 // по подразбиране кодировката е "cp1251"
 
@@ -200,7 +211,7 @@ void MyMainWindow::spellCheckFile(const QString &fn, const QString &codec){
          QString fc = fileContent(file.fileName(),codec);
          ui.textBrowser_2->setPlainText(fc);
          ui.comboBox->setCurrentIndex(3);
-         onToolsContinueSpelling();
+         ui.textBrowser_2 -> setHtml(langDic.forEachWord(ui.textBrowser_2->toPlainText(),&LangDictionary::isCorrect));
       }
 };
 
@@ -211,7 +222,7 @@ void MyMainWindow::onWordClicked(const QModelIndex &mi){
 
 void MyMainWindow::onWordFormClicked(const QModelIndex &mi){
    int i = mi.row();
-   if (cRoot->size()>1) i++;
+//   if (cRoot->size()>1) i++;
    showInfo(i);
 };
 
@@ -249,9 +260,6 @@ void MyMainWindow::onAddButtonPressed(){
    QString t = cRoot->value(QString::fromUtf8("Таблица"));
    QString l = "\"0\",\""+w+"\",\""+t+"\",NULL,\"0\"\n";
    appendToFile("data/w_words_local.csv",l,"UTF-8");
-   showMessage(l); return;
-   
-
 /*
    QStringList fc = fileContent(fn).split("\n");
    QString ln0 = "";
@@ -272,6 +280,18 @@ void MyMainWindow::onAddButtonPressed(){
    saveToFile(fn,ln);
    wordAdded = true;
 */
+};
+
+void MyMainWindow::onFindButtonPressed(){
+  langDic.valueToFind = ui.comboBox_3->currentText();
+  langDic.nameToFind  = ui.comboBox_2->currentText();
+  ui.textBrowser_2 -> setHtml(langDic.forEachWord(ui.textBrowser_2->toPlainText(),&LangDictionary::hasPropertie));
+};
+
+void MyMainWindow::onPNameChanged(const QString &n){
+   QStringList vl = langDic.pHash->value(n).values();
+   vl.sort();
+   ui.comboBox_3->setModel(new QStringListModel(vl));
 };
 
 void MyMainWindow::onTabChanged(int tab){
@@ -410,7 +430,11 @@ void MyMainWindow::onToolsSpellCheckClipboard(){
    QString s = QApplication::clipboard()->text();
    ui.textBrowser_2->setPlainText(s);
    ui.comboBox->setCurrentIndex(3);
-   onToolsContinueSpelling();
+   ui.textBrowser_2 -> setHtml(langDic.forEachWord(ui.textBrowser_2->toPlainText(),&LangDictionary::isCorrect));
+   ui.textBrowser_2 -> setHtml(langDic.spellCheckText(ui.textBrowser_2->toPlainText()));
+   QStringList wl = langDic.checkedWords.values();
+   wl.sort();
+   ui.listView_2 -> setModel( new QStringListModel( wl ) );
 };
 
 void MyMainWindow::onToolsSpellCheckFile(){

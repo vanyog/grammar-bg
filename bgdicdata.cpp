@@ -31,13 +31,14 @@ QHash<int, Thing *> props; // Двойките име-стойност от та
 QHash<int, Thing *> forms; // Групи от двойки име-стойност (форми) от таблица w_forms
 QHash<int, WordForms *> tables; // Таблици за образуване форми на думи от таблица w_tables
 QHash<int, Thing *> tableP; // Свойства на таблиците за образуване форми на думи от таблица w_table_props
+QHash<QString, QSet<QString> > pHash; // Хеш от множества с възможни стойности на свойства на думите
 LangDictionary *cDic = 0; // Речник, в който се добавят думите
 
 
 // Помощна функция, която разделя ред, от csv файл на QStringList от стойности 
 QStringList *splitLine(const QString &l){
   QStringList *sl = new QStringList();
-  QStringList s = l.trimmed().split(",");
+  QStringList s = l.trimmed().split(";");
   for(int i=0; i<s.size(); i++){
     QString q = s.at(i).trimmed();
     if (q.at(0)==QString("\"").at(0)) q = q.mid(1,q.size()-2);
@@ -56,6 +57,7 @@ void loadProps(){
     if (p->size()==4){
       ThingNamedValue *t = new ThingNamedValue(p->at(1),p->at(2));
       props[p->at(0).toInt()] = t;
+      pHash[p->at(1)] << p->at(2);
     }
   }
 }
@@ -75,6 +77,7 @@ void loadForms(){
         if (!forms.value(j)) forms[j] = new ThingNamedValue(t->name(),t->value());
         else forms[j]->append(t);
       }
+      else showMessage("No property pair "+QString::number(v));
     }
   }
 }
@@ -93,7 +96,7 @@ void loadTables(){
       Thing *t = forms.value(k); // Указател към групата свойства
       f->append(t);              // Добавяне на групата свойства към словоформата с окончание
        // Създаване на таблица, ако не съществува
-      if (!tables.value(j)){ tables[j] = new WordForms(); tables[j]->append(f); }
+      if (!tables.value(j)){ tables[j] = new WordForms(); /*tables[j]->append(f);*/ }
       tables[j]->append(f);      // Добавяне на словоформата към таблицата
     }
   }
@@ -112,6 +115,11 @@ void loadTableProps(){
       Thing *t = new ThingNamedValue("Таблица",QString::number(j));
       tableP[j] = t;
       tableP[j]->append(forms.value(k));
+      WordForms *fs = tables.value(j);
+      // Добавяне на общите свойства към всички форми
+      for(int l=0; l<fs->size(); l++){
+        fs->at(l)->append(tableP[j]);
+      }
     }
   }
 }
@@ -125,7 +133,8 @@ void loadMainForms(const QString &f = "w_words.csv"){
     QStringList *p = splitLine(fc.at(i));
     if (p->size()==5){
       int j = p->at(2).toInt(); // Номер на таблицата на думата
-      WordRoot *r = new WordRoot(p->at(1),tables.value(j)); // Създаване на коренова форма
+      WordForms *fs = tables.value(j); // Форми на думата според таблицата
+      WordRoot *r = new WordRoot(p->at(1),fs); // Създаване на коренова форма
       if (tableP.value(j)) r->append(tableP.value(j)); // Добавяне на общите свойства към кореновата форма
       cDic->append(r);  // Добавяне на кореновата форма в речника
     }
@@ -141,8 +150,9 @@ void loadTo(const QString &dicDir, LangDictionary *langDic){
   loadForms(); //showMessage(forms.size());
   loadTables(); //showMessage(tables.size());
   loadTableProps(); //showMessage(tableP.size());
-  loadMainForms();
-  loadMainForms("w_words_local.csv");
+  loadMainForms();  
+  loadMainForms("w_words_local.csv"); // showMessage(langDic->size());
+  langDic->pHash = &pHash;
 };
 
 };

@@ -39,6 +39,7 @@ public:
    MyMainWindow(QWidget *parent = 0);
    void spellCheckFile();
    void spellCheckFile(const QString &fn, const QString &codec = "cp1251");
+   void setPList();
 
 public slots:
    void changeRootsAndForms(bool yes);
@@ -68,6 +69,8 @@ private slots:
    void onWordFormClicked(const QModelIndex &mi);
    void onWordEditChanged(const QString &tx);
    void onAddButtonPressed();
+   void onFindButtonPressed();
+   void onPNameChanged(const QString &n);
    void onTabChanged(int tab);
    void onAboutPr();
    void onDictionaryInfo();
