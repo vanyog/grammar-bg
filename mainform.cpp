@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "bgEnDictionary.h"
 #include "myFileRoutines.h"
 
-QString progVersion="0.3";
+QString progVersion="2.1";
 QString progURL="http://vanyog.com/grammar-bg";
 
 MyMainWindow::MyMainWindow(QWidget *parent)

@@ -213,7 +213,7 @@ selection-background-color: rgb(19, 255, 3);</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QComboBox" name="comboBox_2"/>
@@ -261,7 +261,7 @@ selection-background-color: rgb(19, 255, 3);</string>
      <x>0</x>
      <y>0</y>
      <width>944</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -288,6 +288,7 @@ selection-background-color: rgb(19, 255, 3);</string>
     <addaction name="actionExplore_data_directory"/>
     <addaction name="actionDelete_Index_Files"/>
     <addaction name="actionLoad_IDI_Dictionary"/>
+    <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -412,7 +413,32 @@ selection-background-color: rgb(19, 255, 3);</string>
     <string>Spell check file (UTF-8)</string>
    </property>
   </action>
+  <action name="action_Quit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>action_Quit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
