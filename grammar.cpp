@@ -76,7 +76,7 @@ char* WordRoot::cword(){
 };
 
 QString WordRoot::word(int i){
-   if (i==0) return root;
+ //  if (i==0) return root;
    int qmi = form(0)->qmIndex();
    if (qmi<0)
       return form(i)->word(root);
@@ -133,16 +133,6 @@ WordSuffix::WordSuffix(int an, const QString &asf)
 };
 
 QString WordSuffix::word(const QString &wr){
-/*   QString s = sf;
-   int k = wr.size() - n;
-   int i = s.indexOf("?");
-   if (i>-1){
-      showMessage(wr+"-"+s);
-      int j=k+i;
-      s[i]=wr[j];
-   }
-   QString r = wr.left(k);
-   return r.append(s);*/
    return wr.left(wr.size()-n)+sf;
 };
 

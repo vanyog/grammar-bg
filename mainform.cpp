@@ -50,6 +50,7 @@ MyMainWindow::MyMainWindow(QWidget *parent)
    connect(llView->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(onWordEditChanged(QString)) );
    connect(llView->listView(), SIGNAL(clicked(QModelIndex)), this, SLOT(onWordClicked(QModelIndex)) );
    connect(ui.listView, SIGNAL(clicked(QModelIndex)), this, SLOT(onWordFormClicked(QModelIndex)) );
+   connect(ui.listView_2, SIGNAL(clicked(QModelIndex)), this, SLOT(onWordTextClicked(QModelIndex)) );
    connect(ui.pushButton_3, SIGNAL(pressed()), this, SLOT(onAddButtonPressed()));
    connect(ui.pushButton_4, SIGNAL(pressed()), this, SLOT(onFindButtonPressed()));
    connect(ui.comboBox_2, SIGNAL(currentIndexChanged(QString)), this, SLOT(onPNameChanged(QString)));
@@ -162,6 +163,8 @@ void MyMainWindow::writeSettings(){ // showMessage("Write Settings");
    settings->setValue("tabIndex",ui.comboBox->currentIndex());
    settings->setValue("autoCSpellcheck",ui.actionAutoCSpellcheck->isChecked());
    settings->setValue("lastWord",llView->lineEdit()->text());
+   settings->setValue("lastPropr",ui.comboBox_2->currentIndex());
+   settings->setValue("lastValue",ui.comboBox_3->currentIndex());
 };
 
 void MyMainWindow::readSettings(){
@@ -200,6 +203,9 @@ void MyMainWindow::setPList(){
    QStringList nl = langDic.pHash->keys();
    nl.sort();
    ui.comboBox_2->setModel(new QStringListModel(nl));
+   QSettings *settings = new QSettings("VanyoG","grammar-bg");
+   ui.comboBox_2->setCurrentIndex(settings->value("lastPropr").toInt());
+   ui.comboBox_3->setCurrentIndex(settings->value("lastValue").toInt());
 };
 
 // Проверяване на файл с име fn и кодировка codec
@@ -224,6 +230,10 @@ void MyMainWindow::onWordFormClicked(const QModelIndex &mi){
    int i = mi.row();
 //   if (cRoot->size()>1) i++;
    showInfo(i);
+};
+
+void MyMainWindow::onWordTextClicked(const QModelIndex &mi){
+   llView->lineEdit()->setText(ui.listView_2->model()->data(mi).toString());
 };
 
 /*void MyMainWindow::wordIndexesMoved(const QModelIndexList &mil){

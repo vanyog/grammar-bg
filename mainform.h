@@ -67,6 +67,7 @@ private:
 private slots:
    void onWordClicked(const QModelIndex &mi);
    void onWordFormClicked(const QModelIndex &mi);
+   void onWordTextClicked(const QModelIndex &mi);
    void onWordEditChanged(const QString &tx);
    void onAddButtonPressed();
    void onFindButtonPressed();
