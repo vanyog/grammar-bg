@@ -72,7 +72,7 @@ QString WordRoot::word(){
 }
 
 char* WordRoot::cword(){
-   return root.toAscii().data();
+   return root.toLocal8Bit().data();
 };
 
 QString WordRoot::word(int i){
@@ -88,7 +88,7 @@ QString WordRoot::word(int i){
 };
 
 char *WordRoot::cword(int i){
-   return word(i).toAscii().data();
+   return word(i).toLocal8Bit().data();
 };
 
 QStringList *WordRoot::wordForms(){
@@ -297,7 +297,7 @@ QString LangDictionary::info(){
 }
 
 char *LangDictionary::cinfo(){
-   return info().toAscii().data();
+   return info().toLocal8Bit().data();
 };
 
 int LangDictionary::indexOfRoot(const QString &w){

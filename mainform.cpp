@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QApplication>
 #include <QFont>
 #include <QFontDialog>
@@ -40,8 +40,9 @@ MyMainWindow::MyMainWindow(QWidget *parent)
    ui.vboxLayout->addWidget(llView);
    searchDialog = new SearchDialog(llView,this);
    cRfp = 0; cRoot = 0;
-   bgEnDic = new BgEnDictionary("dic-data/bg-en/");
-   thesDic = new BgEnDictionary("dic-data/thesaurus/");
+   dataDir = QDir::currentPath()+"/data";
+   bgEnDic = new BgEnDictionary(dataDir+"/bg-en/");
+   thesDic = new BgEnDictionary(dataDir+"/thesaurus/");
    wordAdded = false;
    readSettings();
 

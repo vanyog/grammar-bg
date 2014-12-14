@@ -61,6 +61,8 @@ public:
 
 // основна форма на дума със списък от словоформи
 class WordRoot:public WordForm{
+   using WordForm::word;
+   using WordForm::info;
 public:
    WordRoot(const QString &r, WordForms *wfs=0); // създава основна форма с корен r
    ~WordRoot();                                  // и списък от словоформи wfs

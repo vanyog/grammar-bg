@@ -27,6 +27,7 @@ LangDicModel::LangDicModel(WordRootFormPairList *rfpl, QObject *parent)
 };
 
 int LangDicModel::rowCount(const QModelIndex &parent) const{
+   (void)parent;
    return rfpList->size();
 };
 

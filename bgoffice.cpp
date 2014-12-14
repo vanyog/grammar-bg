@@ -324,7 +324,7 @@ void loadDescription(const QString &subDir){
   cLangDic->setLastModified(myFileInfo(filePath).lastModified());
   QTextStream in(&file);
 //  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("cp1251"));
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+  QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
   in.setCodec(QTextCodec::codecForName("cp1251"));
   QString group = "Група:";
   QString form = "Форми:";
@@ -395,7 +395,7 @@ void loadWords(const QString &filePath){
   cLangDic->setLastModified(myFileInfo(filePath).lastModified());
   QTextStream in(&file);
   in.setCodec(QTextCodec::codecForName("cp1251"));
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+  QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
   QString sfx("Окончания:");
   QString test("Тест:");
   QString words("Думи:");

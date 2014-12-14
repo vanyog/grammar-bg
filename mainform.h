@@ -35,6 +35,9 @@ class MyMainWindow : public QMainWindow
    Q_OBJECT
 
 public:
+    // Директория с данни
+    QString dataDir;
+
    LangDictionary langDic, idiDic;
    MyMainWindow(QWidget *parent = 0);
    void spellCheckFile();

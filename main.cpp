@@ -21,14 +21,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QTextCodec>
 #include <QTranslator>
 #include <QLocale>
+#include <QDir>
 
 #include "mainform.h"
 #include "showMessage.h"
 #include "myFileRoutines.h"
 #include "grammar.h"
-
-// Директория с данни
-QString dataDir = "data";
 
 int main(int argc, char *argv[])
 {
@@ -47,7 +45,7 @@ int main(int argc, char *argv[])
     showStatus(app.translate("","Loading dictionary..."));
     
     // namespace BGDicdata, дефиниран в grammar.h и bgdicdata.cpp
-    BGDicdata::loadTo(dataDir,&window.langDic);
+    BGDicdata::loadTo(window.dataDir,&window.langDic);
 
     window.changeRootsAndForms(true);
     window.setPList();
