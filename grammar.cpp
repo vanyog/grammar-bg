@@ -254,7 +254,9 @@ void WordRootFormPairList::sort(int i1,int i2){
    if (k1<i2) sort(k1,i2);
 }
 
-void WordRootFormPairList::loadFromFile(const QString &fn){};
+void WordRootFormPairList::loadFromFile(const QString &fn){
+    (void)fn;
+};
 
 void WordRootFormPairList::saveToFile(const QString &fn, QDateTime lm){
    if (lm<myFileInfo(fn).lastModified()) return;
@@ -292,7 +294,7 @@ LangDictionary::LangDictionary():QList<WordRoot*>(){
 };
 
 QString LangDictionary::info(){
-   return QString("Bulgarian dictionary\n%1 word roots\n%2 word forms\n%3 form patterns")
+   return QApplication::tr("Bulgarian dictionary\n%1 word roots\n%2 word forms\n%3 form patterns")
       .arg(size()).arg(formPairs()->size()).arg(wordFormSet()->size());
 }
 
