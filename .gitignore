@@ -7,3 +7,5 @@ release/*.*
 moc_*.cpp
 data/w_words_local.csv
 .DS_Store
+*.pro.user
+*.pro.user.*
