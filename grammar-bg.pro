@@ -22,3 +22,6 @@ SOURCES += myFileRoutines.cpp bgEnDictionary.cpp
 SOURCES += thing.cpp grammar.cpp bgoffice.cpp ididictionary.cpp bgdicdata.cpp
 SOURCES += humanLanguage.cpp
 TRANSLATIONS += grammar-bg_bg.ts
+
+DISTFILES += \
+    readme.html
