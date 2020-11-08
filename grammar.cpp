@@ -343,7 +343,7 @@ WordRootFormPairList *LangDictionary::loadRFPList(const QString &fn){
    {
       showStatus(qApp->translate("LangDictionary","Reading file...") );
       QFile file(fn);
-      if (file.open(QIODevice::ReadOnly)){
+      if (file.open(QIODevice::ReadOnly)){showMessage(fn);
          QDataStream in(&file);
          while (!in.atEnd()){
             int i,j;

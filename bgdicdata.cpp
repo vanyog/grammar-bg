@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "showMessage.h"
 #include "myFileRoutines.h"
 
+// Четене на информация от csv файловe, свалени от MySQL базата данни на dic.vanyog.com
+
 namespace BGDicdata{
 
 QString dD;
@@ -151,8 +153,10 @@ void loadTo(const QString &dicDir, LangDictionary *langDic){
   loadTables(); //showMessage(tables.size());
   loadTableProps(); //showMessage(tableP.size());
   loadMainForms();
-  if (QFileInfo::exists(dD+"/w_words_local.csv"))
-     loadMainForms("w_words_local.csv"); // showMessage(langDic->size());
+  if (QFileInfo::exists(dD+"/w_words_local.csv")){
+     loadMainForms("w_words_local.csv");
+ //    showMessage(langDic->size());
+  }
   langDic->pHash = &pHash;
 };
 

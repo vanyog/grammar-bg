@@ -9,3 +9,5 @@ data/w_words_local.csv
 .DS_Store
 *.pro.user
 *.pro.user.*
+data/_D2_*
+roots-idi.dat

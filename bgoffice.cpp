@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QApplication>
 #include <QDateTime>
 
+// Четене на информация от файловата структура https://sourceforge.net/p/bgoffice/code/HEAD/tree/trunk/bgoffice/data/
+
 namespace BGOffice{
 
 int fileCount=0; // Брой на обработените файлове с думи

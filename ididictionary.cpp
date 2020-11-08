@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 namespace IDIDictionary{
 
 void loadTo(const QString &dicDir, LangDictionary *langDic){
+  langDic->pHash = NULL;
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
   langDic->setRootIndexFileName("roots-idi.dat");
   langDic->setFormIndexFileName("forms-idi.dat");

@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     showStatus(app.translate("","Loading dictionary..."));
     
     // namespace BGDicdata, дефиниран в grammar.h и bgdicdata.cpp
+//    IDIDictionary::loadTo(window.dataDir + "/_D2_ungrouped_sorted.txt",&window.langDic);
     BGDicdata::loadTo(window.dataDir,&window.langDic);
 
     window.changeRootsAndForms(true);

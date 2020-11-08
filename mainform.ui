@@ -42,11 +42,14 @@
         </property>
         <item>
          <widget class="QRadioButton" name="radioButton">
+          <property name="toolTip">
+           <string>Show only main word forms</string>
+          </property>
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="text">
-           <string>Word roots</string>
+           <string>Main word forms</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -60,6 +63,9 @@
             <width>100</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Show all word forms</string>
           </property>
           <property name="text">
            <string>All word forms</string>
@@ -77,6 +83,12 @@
           </property>
           <item>
            <widget class="QPushButton" name="pushButton_3">
+            <property name="toolTip">
+             <string>Select a word from text. 
+Select a sinilar word from list.
+Click &quot;Add&quot; button to insert in the database. 
+New words will apare after program restart.</string>
+            </property>
             <property name="text">
              <string>Add</string>
             </property>
@@ -89,6 +101,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Choose what information to see</string>
             </property>
             <item>
              <property name="text">
@@ -147,6 +162,9 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="toolTip">
+                <string>Go to next misspelled word</string>
+               </property>
                <property name="text">
                 <string>Continue</string>
                </property>
@@ -173,8 +191,11 @@
           </item>
           <item>
            <widget class="QLabel" name="label">
+            <property name="toolTip">
+             <string>Show the same word in online dictionary.</string>
+            </property>
             <property name="text">
-             <string>&lt;a href=&quot;http://physics-bg.org/z/?pid=2&quot;&gt;Online&lt;/a&gt;</string>
+             <string>&lt;a href=&quot;http://dic.vanyog.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0068da;&quot;&gt;Online&lt;/span&gt;&lt;/a&gt;</string>
             </property>
             <property name="textFormat">
              <enum>Qt::RichText</enum>
@@ -215,12 +236,22 @@
               <height>0</height>
              </size>
             </property>
+            <property name="toolTip">
+             <string>Forms of the selected word</string>
+            </property>
            </widget>
-           <widget class="QTextBrowser" name="textBrowser"/>
+           <widget class="QTextBrowser" name="textBrowser">
+            <property name="toolTip">
+             <string>Information about the selected word form</string>
+            </property>
+           </widget>
           </widget>
           <widget class="QTextBrowser" name="textBrowser_2">
            <property name="enabled">
             <bool>true</bool>
+           </property>
+           <property name="toolTip">
+            <string>Text to process</string>
            </property>
            <property name="styleSheet">
             <string notr="true">selection-color: rgb(52, 12, 255);
@@ -244,15 +275,25 @@ selection-background-color: rgb(19, 255, 3);</string>
             <height>0</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Choose a grammatical category to find.</string>
+          </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox_3"/>
+         <widget class="QComboBox" name="comboBox_3">
+          <property name="toolTip">
+           <string>Choose a value for the grammatical category to find</string>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QPushButton" name="pushButton_4">
+            <property name="toolTip">
+             <string>Click to find in the processed text words with specified grammar property</string>
+            </property>
             <property name="text">
              <string>Find</string>
             </property>
@@ -274,7 +315,11 @@ selection-background-color: rgb(19, 255, 3);</string>
          </layout>
         </item>
         <item>
-         <widget class="QListView" name="listView_2"/>
+         <widget class="QListView" name="listView_2">
+          <property name="toolTip">
+           <string>List of the words from text which is processed</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -289,7 +334,7 @@ selection-background-color: rgb(19, 255, 3);</string>
      <x>0</x>
      <y>0</y>
      <width>944</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -304,6 +349,7 @@ selection-background-color: rgb(19, 255, 3);</string>
      <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout_Program"/>
+    <addaction name="actionDetailed_help"/>
     <addaction name="actionAbout_Qt"/>
     <addaction name="actionDictionary_Info"/>
    </widget>
@@ -384,6 +430,9 @@ selection-background-color: rgb(19, 255, 3);</string>
    </property>
   </action>
   <action name="actionOpen_dat_file">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Open .&amp;dat file</string>
    </property>
@@ -429,6 +478,9 @@ selection-background-color: rgb(19, 255, 3);</string>
    </property>
   </action>
   <action name="actionLoad_IDI_Dictionary">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Load IDI Dictionary</string>
    </property>
@@ -447,6 +499,14 @@ selection-background-color: rgb(19, 255, 3);</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionDetailed_help">
+   <property name="text">
+    <string>Detailed help</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>

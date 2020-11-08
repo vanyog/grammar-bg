@@ -17,10 +17,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <QtWidgets>
 #include <QApplication>
+#include <QDesktopServices>
 #include <QFont>
 #include <QFontDialog>
+#include <QtWidgets>
+#include <QUrl>
 
 #include "mainform.h"
 #include "showMessage.h"
@@ -28,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "bgEnDictionary.h"
 #include "myFileRoutines.h"
 
-QString progVersion="2.1";
+QString progVersion="2.2";
 QString progURL="http://vanyog.com/grammar-bg";
 
 MyMainWindow::MyMainWindow(QWidget *parent)
@@ -41,10 +43,12 @@ MyMainWindow::MyMainWindow(QWidget *parent)
    searchDialog = new SearchDialog(llView,this);
    cRfp = 0; cRoot = 0;
    dataDir = QDir::currentPath()+"/data";
+   helpDir = QDir::currentPath()+"/help";
    bgEnDic = new BgEnDictionary(dataDir+"/bg-en/");
    thesDic = new BgEnDictionary(dataDir+"/thesaurus/");
    wordAdded = false;
    readSettings();
+   setAttribute(Qt::WA_AlwaysShowToolTips,true);
 
    connect(ui.radioButton, SIGNAL(toggled(bool)), this, SLOT(changeRootsAndForms(bool)) );
    connect(ui.radioButton_2, SIGNAL(toggled(bool)), this, SLOT(changeRootsAndForms(bool)) );
@@ -132,7 +136,7 @@ void MyMainWindow::showByTab(int tab, int i){
    else ui.frame->hide();
    if (i<0) return;
    cRfp = rfpList()->at(i);
-   QString w;
+   QString w = cRfp->root()->word();
    switch (tab){
    case 0:  // Морфология
    case 3:  // Правопис
@@ -140,14 +144,18 @@ void MyMainWindow::showByTab(int tab, int i){
       showFormList();
       break;
    case 1:  // Превод на английски
-      w = cRfp->root()->word();
       ui.textBrowser->setText(bgEnDic->translation(w));
       break;
    case 2:  // Синоними
-      w = cRfp->root()->word();
       ui.textBrowser->setText(thesDic->translation(w));
       break;
    }
+   QString w1 = "";
+   for(int i=0; i<w.length(); i++){
+       int c = w.at(i).unicode() - 848;
+       w1 += "%" + QString::number(c,16);
+   }
+   ui.label->setText("<a href=\"http://dic.vanyog.com/?pid=2&wf="+ w1 + "\">Online</a>");
 };
 
 void MyMainWindow::writeSettings(){ // showMessage("Write Settings");
@@ -201,10 +209,11 @@ void MyMainWindow::spellCheckFile(){
 };
 
 void MyMainWindow::setPList(){
+    QSettings *settings = new QSettings("VanyoG","grammar-bg");
+    if(langDic.pHash==NULL) return;
    QStringList nl = langDic.pHash->keys();
    nl.sort();
    ui.comboBox_2->setModel(new QStringListModel(nl));
-   QSettings *settings = new QSettings("VanyoG","grammar-bg");
    ui.comboBox_2->setCurrentIndex(settings->value("lastPropr").toInt());
    ui.comboBox_3->setCurrentIndex(settings->value("lastValue").toInt());
 };
@@ -269,7 +278,7 @@ void MyMainWindow::onAddButtonPressed(){
      tr("Ward to add"), tr("in the same group with <strong>%1</strong>: ").arg(w0), QLineEdit::Normal, w, &ok);
    if (!ok || !w.size()) return;
    QString t = cRoot->value(QString::fromUtf8("Таблица"));
-   QString l = "\"0\",\""+w+"\",\""+t+"\",NULL,\"0\"\n";
+   QString l = "\"0\";\""+w+"\";\""+t+"\";NULL;\"0\"\n";
    appendToFile("data/w_words_local.csv",l,"UTF-8");
 /*
    QStringList fc = fileContent(fn).split("\n");
@@ -372,11 +381,17 @@ void MyMainWindow::onFileSaveAs(){
 };
 
 void MyMainWindow::onFileOpenDat(){
-  if (!cRoot) return;
+  if (!cRoot){
+      showMessage("No word is selected.");
+      return;
+  }
   QString w = cRoot->word();
   QApplication::clipboard()->setText(w);
   QString fn = cRoot->value(QString::fromUtf8("таблица"));
-  if (!QFileInfo(fn).exists()) return;
+  if (!QFileInfo(fn).exists()){
+      showMessage(QString("File %1 do not exists.").arg(fn));
+      return;
+  }
   QProcess *p = new QProcess();
   QStringList a;
   a << fn;
@@ -402,9 +417,14 @@ void MyMainWindow::onFileExploreData(){
   showMessage("Not implemented for Windows");
 #endif*/
 
+   if (!cRoot){
+       showMessage("No word is selected.");
+       return;
+   }
    QStringList a;
    QString d = QFileInfo(cRoot->value(QString::fromUtf8("таблица"))).absolutePath();
    d = d.replace("/",QDir::separator());
+   if(!d.length()) d = dataDir;
    QProcess *p = new QProcess();
 #ifdef Q_WS_WIN
    a << "/n,/e," << d;
@@ -421,7 +441,8 @@ void MyMainWindow::onFileDeleteIndexFiles(){
 };
 
 void MyMainWindow::onFileIDIDic(){
-  IDIDictionary::loadTo("_D2_ungrouped_sorted.txt",&idiDic);
+  IDIDictionary::loadTo("data/_D2_ungrouped_sorted.txt",&idiDic);
+  if(!idiDic.count()) return;
   showMessage(tr("Loaded"));
   for(int i=0; i<5; i++){
      QString w = idiDic.at(i)->word();
@@ -475,6 +496,7 @@ void MyMainWindow::onToolsContinueSpelling(){
    showStatus( sm.note() );
 };
 
-void MyMainWindow::onToolsReplace(){
-
-};
+void MyMainWindow::on_actionDetailed_help_triggered()
+{
+    QDesktopServices::openUrl(QUrl("file://" + helpDir + "/index.html"));
+}

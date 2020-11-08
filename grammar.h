@@ -158,7 +158,7 @@ public:
    bool isAbreviation(const QString &w, QChar pm); // връща true ако w е съкращение на дума, pm е знака след w, трябва да е "."
    bool towWords(const QString &w); // проверява дали w са две слепени думи
    HumanLanguage *language;  // обект представящ езика
-   QHash<QString, QSet<QString> > *pHash; // Хеш от множества с възможни стойности на свойствана думите
+   QHash<QString, QSet<QString> > *pHash; // Хеш от множества с възможни стойности на свойства на думите
    QSet<QString> checkedWords;
    QString valueToFind;
    QString nameToFind;

@@ -37,6 +37,7 @@ class MyMainWindow : public QMainWindow
 public:
     // Директория с данни
     QString dataDir;
+    QString helpDir;
 
    LangDictionary langDic, idiDic;
    MyMainWindow(QWidget *parent = 0);
@@ -90,7 +91,7 @@ private slots:
    void onToolsSpellCheckFileUtf8();
    void onToolsSpellCheckClipboard();
    void onToolsContinueSpelling();
-   void onToolsReplace();
+   void on_actionDetailed_help_triggered();
 };
 
 #endif
