@@ -615,7 +615,7 @@ New words will apare after program restart.</source>
     <message>
         <location filename="searchDialog.ui" line="45"/>
         <source>Find &amp;next</source>
-        <translation>Търси &amp;следваща</translation>
+        <translation>&amp;Търси следваща</translation>
     </message>
     <message>
         <location filename="searchDialog.ui" line="52"/>
@@ -625,12 +625,12 @@ New words will apare after program restart.</source>
     <message>
         <location filename="searchDialog.ui" line="59"/>
         <source>&amp;Close</source>
-        <translation>&amp;Затвори</translation>
+        <translation>З&amp;атвори</translation>
     </message>
     <message>
         <location filename="searchDialog.ui" line="78"/>
         <source>Contains the las</source>
-        <translation>Съдържат последната</translation>
+        <translation>Съ&amp;държат последната</translation>
     </message>
     <message>
         <location filename="searchDialog.cpp" line="112"/>

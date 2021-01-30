@@ -11,3 +11,8 @@ data/w_words_local.csv
 *.pro.user.*
 data/_D2_*
 roots-idi.dat
+.qmake.stash
+.vs
+debug
+*.vcxproj*
+release
