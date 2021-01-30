@@ -71,9 +71,9 @@ QString WordRoot::word(){
    return root;
 }
 
-char* WordRoot::cword(){
-   return root.toLocal8Bit().data();
-};
+//char* WordRoot::cword(){
+//   return root.toLocal8Bit().data();
+//};
 
 QString WordRoot::word(int i){
  //  if (i==0) return root;
@@ -87,9 +87,9 @@ QString WordRoot::word(int i){
    }
 };
 
-char *WordRoot::cword(int i){
-   return word(i).toLocal8Bit().data();
-};
+//char *WordRoot::cword(int i){
+//   return word(i).toLocal8Bit().data();
+//};
 
 QStringList *WordRoot::wordForms(){
    if (!size()) return 0;
@@ -298,9 +298,9 @@ QString LangDictionary::info(){
       .arg(size()).arg(formPairs()->size()).arg(wordFormSet()->size());
 }
 
-char *LangDictionary::cinfo(){
-   return info().toLocal8Bit().data();
-};
+//char *LangDictionary::cinfo(){
+//   return info().toLocal8Bit().data();
+//};
 
 int LangDictionary::indexOfRoot(const QString &w){
    WordRootFormPairList *rfpl = rootPairs();
@@ -343,7 +343,7 @@ WordRootFormPairList *LangDictionary::loadRFPList(const QString &fn){
    {
       showStatus(qApp->translate("LangDictionary","Reading file...") );
       QFile file(fn);
-      if (file.open(QIODevice::ReadOnly)){showMessage(fn);
+      if (file.open(QIODevice::ReadOnly)){
          QDataStream in(&file);
          while (!in.atEnd()){
             int i,j;
@@ -476,7 +476,7 @@ QString LangDictionary::forEachWord(const QString &t, QString (LangDictionary::*
         QString w = t.mid(i1+1,l);
         w = (this->*pf)(w);
         r.replace(i1+n, l, w);
-        n += w.size() - l;
+//        n += w.size() - l;
   }
   return r;
 };
@@ -504,7 +504,7 @@ QString LangDictionary::spellCheckText(const QString &t){
         checkedWords << w.toLower();
         w = isCorrect(w);
         r.replace(i1+n, l, w);
-        n += w.size() - l;
+//        n += w.size() - l;
   }
   return r;
 };

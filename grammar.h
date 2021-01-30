@@ -68,9 +68,9 @@ public:
    ~WordRoot();                                  // и списък от словоформи wfs
    virtual QString info(bool withList=false); // връща информация за класа
    QString word(); // генерира основната форма
-   char* cword();  // връща основната форма като char*
+//   char* cword();  // връща основната форма като char*
    QString word(int i); // генерира i-тата форма
-   char* cword(int i);  // връща i-тата форма като char*
+//   char* cword(int i);  // връща i-тата форма като char*
    QStringList* wordForms(); // списък на словоформите
    WordForm* form(int i); // връща указател към i-тата словоформа
    WordForm* form(const QString &wf); // връща указател към словоформата wf или 0
@@ -129,7 +129,7 @@ class LangDictionary:public QList<WordRoot*>{
 public:
    LangDictionary();
    QString info(); // дава информация за речника
-   char *cinfo();  // информация за речника като char*
+//   char *cinfo();  // информация за речника като char*
    int indexOfRoot(const QString &w); // номер на корен w или номер на мястото, на което трябва да се вмъкне
    int indexOfForm(const QString &w); // номер на словоформа w или -1 ако няма такава
    WordForm *form(int i);            // словоформа с номер i

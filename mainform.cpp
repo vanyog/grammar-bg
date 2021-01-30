@@ -120,8 +120,6 @@ void MyMainWindow::closeEvent(QCloseEvent *event){
 void MyMainWindow::showInfo(int i){
    cRoot = cRfp->root();
    QString tx = cRoot->form(i)->info();
-//   QString tx = cRoot->info();
-//   if (i>0) tx.append("<BR><BR>").append(cRoot->form(i)->info());
    ui.textBrowser->setHtml(tx);
 };
 
@@ -174,6 +172,11 @@ void MyMainWindow::writeSettings(){ // showMessage("Write Settings");
    settings->setValue("lastWord",llView->lineEdit()->text());
    settings->setValue("lastPropr",ui.comboBox_2->currentIndex());
    settings->setValue("lastValue",ui.comboBox_3->currentIndex());
+   settings->setValue("showAllForms",ui.radioButton_2->isChecked());
+   settings->setValue("fileName",searchDialog->fileName);
+   settings->setValue("searchType", searchDialog->contains());
+   settings->setValue("containsLast", searchDialog->cLast());
+   settings->setValue("searchText", searchDialog->sText());
 };
 
 void MyMainWindow::readSettings(){
@@ -198,7 +201,11 @@ void MyMainWindow::readSettings(){
       disconnect(QApplication::clipboard(), SIGNAL(dataChanged()), 0, 0);
    QString w = settings->value("lastWord").toString();
    llView->lineEdit()->setText(w);
-//   onWordEditChanged(w);
+   ui.radioButton_2->setChecked(settings->value("showAllForms").toBool());
+   searchDialog->fileName = settings->value("fileName").toString();
+   searchDialog->setContains(settings->value("searchType").toBool());
+   searchDialog->setCLast(settings->value("containsLast").toBool());
+   searchDialog->setSText(settings->value("searchText").toString());
 };
 
 // Проверяване на файла, чието име и изпратено в променлива на обкръжението
@@ -209,8 +216,8 @@ void MyMainWindow::spellCheckFile(){
 };
 
 void MyMainWindow::setPList(){
-    QSettings *settings = new QSettings("VanyoG","grammar-bg");
-    if(langDic.pHash==NULL) return;
+   if(langDic.pHash==NULL) return;
+   QSettings *settings = new QSettings("VanyoG","grammar-bg");
    QStringList nl = langDic.pHash->keys();
    nl.sort();
    ui.comboBox_2->setModel(new QStringListModel(nl));
@@ -268,7 +275,7 @@ void MyMainWindow::onWordEditChanged(const QString &tx){
 
 void MyMainWindow::onAddButtonPressed(){
    if (!cRoot){
-      showMessage(tr("No word is selected."));
+      showMessage(tr("Nothing to add. No word is selected."));
       return;
    }
    QString w0 = cRoot->word();
@@ -335,7 +342,7 @@ void MyMainWindow::onAutoCSPellcheck(){
 };
 
 void MyMainWindow::onAboutPr(){
-   showMessage(tr("grammar-bg v%1<br>Copyright (C) 2006  Vanyo Georgiev &lt;<A HREF=mailto:info@vanyog.com>info@vanyog.com</A>&gt;<br><A HREF=%2>%2</A><br><br>This program is free software; you can redistribute it and/or<br>modify it under the terms of the GNU General Public License<br>as published by the Free Software Foundation; either version 2<br>of the License, or (at your option) any later version.<br><br>This program is distributed in the hope that it will be useful,<br>but WITHOUT ANY WARRANTY; without even the implied warranty of<br>MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br>GNU General Public License for more details.<br><br>You should have received a copy of the GNU General Public License<br>along with this program; if not, write to the Free Software<br><br>Foundation, Inc., 51 Franklin Street, Fifth Floor,<BR>Boston, MA  02110-1301, USA.").arg(progVersion).arg(progURL) );
+   showMessage(tr("grammar-bg v%1<br>Copyright (C) 2006  Vanyo Georgiev &lt;<A HREF=mailto:info@vanyog.com>info@vanyog.com</A>&gt;<br><A HREF=%2>%2</A><br><br>This program is free software; you can redistribute it and/or<br>modify it under the terms of the GNU General Public License<br>as published by the Free Software Foundation; either version 2<br>of the License, or (at your option) any later version.<br><br>This program is distributed in the hope that it will be useful,<br>but WITHOUT ANY WARRANTY; without even the implied warranty of<br>MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br>GNU General Public License for more details.<br><br>You should have received a copy of the GNU General Public License<br>along with this program; if not, write to the Free Software<br><br>Foundation, Inc., 51 Franklin Street, Fifth Floor,<BR>Boston, MA  02110-1301, USA.").arg(progVersion, progURL) );
 };
 
 void MyMainWindow::onDictionaryInfo(){
@@ -382,13 +389,13 @@ void MyMainWindow::onFileSaveAs(){
 
 void MyMainWindow::onFileOpenDat(){
   if (!cRoot){
-      showMessage("No word is selected.");
+      showMessage(tr("Select a word before trying to open .dat file."));
       return;
   }
   QString w = cRoot->word();
   QApplication::clipboard()->setText(w);
   QString fn = cRoot->value(QString::fromUtf8("таблица"));
-  if (!QFileInfo(fn).exists()){
+  if (!QFileInfo::exists(fn)){
       showMessage(QString("File %1 do not exists.").arg(fn));
       return;
   }
@@ -398,7 +405,7 @@ void MyMainWindow::onFileOpenDat(){
 #ifdef Q_WS_MAC
   p->start("open",a);
 #else
-  if (QFileInfo("C:/Program Files/Windows NT/Accessories/wordpad.exe").exists())
+  if (QFileInfo::exists("C:/Program Files/Windows NT/Accessories/wordpad.exe"))
      p->start("C:/Program Files/Windows NT/Accessories/wordpad.exe",a);
   else
      p->start("D:/Program Files/Windows NT/Accessories/wordpad.exe",a);
@@ -406,19 +413,8 @@ void MyMainWindow::onFileOpenDat(){
 };
 
 void MyMainWindow::onFileExploreData(){
-/*  if (!cRoot) return;
-  QString dn = QFileInfo(cRoot->value(QString::fromUtf8("таблица"))).absolutePath();
-  QProcess *p = new QProcess();
-  QStringList a;
-  a << dn;
-#ifdef Q_WS_MAC
-  p->start("open",a);
-#else
-  showMessage("Not implemented for Windows");
-#endif*/
-
    if (!cRoot){
-       showMessage("No word is selected.");
+       showMessage(tr("Select a word before trying to open data folder."));
        return;
    }
    QStringList a;

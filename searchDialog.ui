@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>410</width>
+    <width>442</width>
     <height>144</height>
    </rect>
   </property>
@@ -14,16 +14,6 @@
    <string>Word Searching</string>
   </property>
   <layout class="QGridLayout">
-   <item row="0" column="0" colspan="2">
-    <widget class="QRadioButton" name="radioButton">
-     <property name="text">
-      <string>&amp;Contains letter</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="2">
     <widget class="QRadioButton" name="radioButton_2">
      <property name="text">
@@ -79,6 +69,23 @@
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string>Contains the las</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QRadioButton" name="radioButton">
+     <property name="text">
+      <string>&amp;Contains letters</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

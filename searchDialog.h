@@ -30,6 +30,14 @@ public:
  SearchDialog(LargeListView *llView, QWidget *parent = 0);
  void resetProgressBar();
 
+ QString fileName;
+ bool contains();
+ void setContains(bool ch);
+ bool cLast();
+ void setCLast(bool ch);
+ QString sText();
+ void setSText(QString t);
+
 private slots:
  void onRadioButton();
  void onFindNext();
@@ -47,6 +55,7 @@ private:
  void setupLisr();
  int findNext(int i, QStringList *sw);
  int findNext2(int i, QStringList *sw);
+ int findNext3(int i, QStringList *sw);
 };
 
 

@@ -26,13 +26,41 @@ SearchDialog::SearchDialog(LargeListView *llView, QWidget *parent)
   :QDialog(parent)
 {
  ui.setupUi(this);
+ ui.checkBox->hide();
  ss0="";
+ fileName = "";
  largeListView = llView;
  ui.progressBar->reset();
  connect(ui.radioButton, SIGNAL(clicked()), this, SLOT(onRadioButton()) );
  connect(ui.radioButton_2, SIGNAL(clicked()), this, SLOT(onRadioButton()) );
  connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(onFindNext()) );
  connect(ui.pushButton_3, SIGNAL(clicked()), this, SLOT(onSaveToFile()) );
+}
+
+bool SearchDialog::contains(){
+    return ui.radioButton->isChecked();
+}
+
+void SearchDialog::setContains(bool ch){
+    ui.radioButton->setChecked(ch);
+    ui.radioButton_2->setChecked(!ch);
+    ui.checkBox->setVisible(!ch);
+}
+
+bool SearchDialog::cLast(){
+    return ui.checkBox->isChecked();
+}
+
+void SearchDialog::setCLast(bool ch){
+    ui.checkBox->setChecked(ch);
+}
+
+QString SearchDialog::sText(){
+    return ui.lineEdit->text();
+}
+
+void SearchDialog::setSText(QString t){
+   ui.lineEdit->setText(t);
 }
 
 void SearchDialog::resetProgressBar(){
@@ -53,6 +81,8 @@ void SearchDialog::setupLisr(){
 
 void SearchDialog::onRadioButton(){
  ui.progressBar->reset();
+ if(ui.radioButton->isChecked()) ui.checkBox->hide();
+ else ui.checkBox->show();
 };
 
 void SearchDialog::onFindNext(){
@@ -61,7 +91,8 @@ void SearchDialog::onFindNext(){
  int i=ui.progressBar->value();
  int j;
  if (ui.radioButton->isChecked()) j=findNext(i,&sw);
- else j=findNext2(i,&sw);
+ else if ( !ui.checkBox->isChecked() ) j=findNext2(i,&sw);
+      else j=findNext3(i,&sw);
  if (j>i) {
   ui.progressBar->setValue(j);
   QString s = largeListView->item(j);
@@ -77,8 +108,9 @@ void SearchDialog::onFindNext(){
 void SearchDialog::onSaveToFile(){
  setupLisr();
  if (ss0.size()<1) return;
- QString fileName = QFileDialog::getSaveFileName(
-         this, tr("Save as"), "", tr("Text files (*.txt)") );
+ fileName = QFileDialog::getSaveFileName(
+         this, tr("Save as"), fileName, tr("Text files (*.txt)") );
+ if(fileName.isEmpty()) return;
  QFile file(fileName);
  if (file.open(QIODevice::WriteOnly)){
   ui.progressBar->reset();
@@ -89,9 +121,10 @@ void SearchDialog::onSaveToFile(){
   do {
    i=j;
    if (ui.radioButton->isChecked()) j=findNext(i,&sw);
-   else j=findNext2(i,&sw);
+   else if( !ui.checkBox->isChecked() ) j=findNext2(i,&sw);
+        else j=findNext3(i,&sw);
    QString s = largeListView->item(j);
-   if (s!=s0){
+   if ( (s!=s0) && (s.length()>1) ) {
     out << s << "\r\n";
 	n++;
    }
@@ -123,23 +156,53 @@ int SearchDialog::findNext(int i, QStringList *sw){
 };
 
 int SearchDialog::findNext2(int i, QStringList *sw){
-// notReady(); return i;
  i++;
  int j;
  for(j=i; j < largeListView->count(); j++){
   if (j % step100 == 0) ui.progressBar->setValue(j);
-  QString s = largeListView->item(j);
+  QString s = largeListView->item(j); //
   int k=0;
-  bool yes = true;
+  bool yes = false;
   while (k < s.size()){
    int k0 = k;
    for(int l=0; l < sw->size(); l++){
     int p = s.indexOf(sw->at(l),k);
-	if (p==k) { k = k + sw->at(l).size(); break; }
+    if (p==k) {
+        yes = true;
+        k += sw->at(l).size();
+        break;
+    }
    }
    if (k==k0) { yes=false; break; }
   }
   if (yes) return j;
+ }
+ ui.progressBar->setValue(j);
+ return i-1;
+};
+
+int SearchDialog::findNext3(int i, QStringList *sw){
+ i++;
+ int j;
+ for(j=i; j < largeListView->count(); j++){
+  if (j % step100 == 0) ui.progressBar->setValue(j);
+  QString s = largeListView->item(j); //
+  int k=0;
+  bool yes = false;
+  while (k < s.size()){
+   int k0 = k;
+   for(int l=0; l < sw->size(); l++){
+    int p = s.indexOf(sw->at(l),k);
+    if (p==k) {
+        yes = true;
+        k += sw->at(l).size();
+        break;
+    }
+   }
+   if (k==k0) { yes=false; break; }
+  }
+  QString last = sw->at(sw->size()-1);
+  if (yes && (s.indexOf(last)>-1)) return j;
  }
  ui.progressBar->setValue(j);
  return i-1;
