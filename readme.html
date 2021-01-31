@@ -15,13 +15,13 @@
 
 <h2>Изтегляне на необходимите файлове</h2>
 
-<P><B>Изходния код на grammar-bg</B> се публикува в <B><A HREF="https://github.com/vanyog/grammar-bg" TARGET="_blank">github.com</A></B>.
+<P><B>Изходния код на grammar-bg</B> се публикува в <B><A HREF="https://github.com/vanyog/grammar-bg" TARGET="_blank">github.com/vanyog/grammar-bg</A></B>.
 <br>За функциите показване на синоними и превод на английски са необходими речниците bg-en и thesaurus от bgoffice, които се доставят с изходния код на grammar-bg, но най-новите им версии може да се изтеглят <a href="https://sourceforge.net/p/bgoffice/code/HEAD/tree/trunk/dictionaries/data/" TARGET="_blank">SVN хранилището на bgoffice</a>.
 <br>За да може да компилирате grammar-bg, трябва преди това да сте изтеглили и инсталирали <A HREF="http://www.qt.io/download-open-source/" TARGET="_blank">Qt Open Source</A>. (Информация на български за работа с Qt има в книгата "<A HREF="http://sci.vanyog.com/index.php?pid=274" TARGET="_blank">Програмиране с Qt</A>".)</p>
 
 <h2>Компилиране</h2>
 
-<p>Изходният код на grammar-bg може да изтеглите от <a href="https://github.com/vanyog/grammar-bg"  TARGET="_blank">https://github.com/vanyog/grammar-bg</a> във вид на ZIP файл (през бутона "Clone or Download" -> "Download ZIP" на страницата в GitHub), чрез програма Git клиент или директно с Qt Creator.</p>
+<p>Изходният код на grammar-bg може да изтеглите от <a href="https://github.com/vanyog/grammar-bg"  TARGET="_blank">https://github.com/vanyog/grammar-bg</a> във вид на ZIP файл (през бутона <b>"Code" -> "Download ZIP"</b> на страницата в GitHub), чрез програма Git клиент или директно с Qt Creator.</p>
 
 <p>След като вече разполагате с изходния код, в Qt Creator отворете файл grammar-bg.pro и потвърдете с "Configure project" създаването на целеви комплект за средата на Вашия компютър.</p>
 
@@ -33,6 +33,14 @@
 <P>При първото стартиране grammar-bg подрежда по азбучен ред кореновите форми, а когато щракнете бутона "Всички словоформи" се подреждат по азбучен ред и всички словоформи. Подреждането може да продължи до няколко минути на по-бавни компютри, но след като бъде извършено, редът на думите се записва в два файла - roots.dat и forms.dat и при следващи стартирания се чете от там, което става многократно по-бързо.
 
 <h2>Публикувани досега версии</h2>
+
+<p><strong>31 януари 2021 г. - версия 2.2.0</strong><br>
+Само като програмен код в GitHub.
+<ul>
+<li>Компилиране с последваната главна версия 5 на Qt - 5.12.2. Обмисля се мигриране към главна версия 6.</li>
+<li>Добавени нови функции: Помощ - Подробна помощ; подобрение на Редактиране - Търсене, целящо по-прецизно намиране на думи, състоящи се от зададени букви;</li>
+<li>Подобрения в интерфейса: подсказващи надписи (Tooltips), превода на български, хиперлинк "Oline"</li>
+</ul>
 
 <p><strong>31 март 2013 г. - версия 2.0</strong><br>
 През изминалото от публикуването на предишната версия време по програмата се работеше и новата версия съдържа следните новости:</p>
