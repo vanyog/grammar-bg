@@ -48,6 +48,11 @@ QFileInfo myFileInfo(const QString &fn){
 
 QString myStatusDir(const QString &fn){
  QString dp = qApp->applicationDirPath();
+#ifdef Q_OS_MAC
+ dp = dp.left(dp.length() - 15);
+ dp = QFileInfo(dp).dir().path();
+#endif
+ QDir::setCurrent(dp);
  QString fp = dp; fp.append("/").append(fn);
  
  QFileInfo fi = myFileInfo(fp);
@@ -56,12 +61,20 @@ QString myStatusDir(const QString &fn){
  return fp;
 };
 
+void setCurrentAppDir(){
+    QString dp = qApp->applicationDirPath();
+   #ifdef Q_OS_MAC
+    dp = dp.left(dp.length() - 15);
+    dp = QFileInfo(dp).dir().path();
+   #endif
+    QDir::setCurrent(dp);
+}
+
 QString fileContent(const QString &fn, const QString &codec){
    QFile file(fn);
    if (!file.open(QFile::ReadOnly | QFile::Text)) {
       showMessage(QApplication::tr("Cannot read file %1:\n%2.")
-         .arg(fn)
-         .arg(file.errorString())
+         .arg(fn, file.errorString())
       );
       return "";
    }
@@ -77,8 +90,7 @@ QString fileContent(const QString &fn, const QString &codec){
 QString fileContent(QFile &fl, const QString &codec){
    if (!fl.open(QFile::ReadOnly | QFile::Text)) {
       showMessage(QApplication::tr("Cannot read file %1:\n%2.")
-         .arg("fl.fileName()")
-         .arg(fl.errorString())
+         .arg("fl.fileName()", fl.errorString())
       );
       return "";
    }
@@ -95,8 +107,7 @@ void saveToFile(const QString &fn, const QString &fc, const QString &codec){
    QFile file(fn);
    if (!file.open(QFile::WriteOnly | QFile::Text)) {
       showMessage(QApplication::tr("Cannot write to file: %1.\n%2.")
-         .arg(fn)
-         .arg(file.errorString())
+         .arg(fn, file.errorString())
       );
       return;
    }
@@ -112,8 +123,7 @@ void appendToFile(const QString &fn, const QString &fc, const QString &codec){
    QFile file(fn);
    if (!file.open(QIODevice::Append | QFile::Text)) {
       showMessage(QApplication::tr("Cannot write to file: %1.\n%2.")
-         .arg(fn)
-         .arg(file.errorString())
+         .arg(fn, file.errorString())
       );
       return;
    }

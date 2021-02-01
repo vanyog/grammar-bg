@@ -24,5 +24,6 @@ SOURCES += humanLanguage.cpp
 TRANSLATIONS += grammar-bg_bg.ts
 
 DISTFILES += \
+    grammar-bg_bg.qm \
     help/index.html \
     readme.html

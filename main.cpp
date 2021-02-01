@@ -32,8 +32,10 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc,argv);
 
+    setCurrentAppDir();
+
     QTranslator translator;
-    translator.load("grammar-bg_"+QLocale::system().name());
+    translator.load(QDir::currentPath() + "/grammar-bg_"+QLocale::system().name());
     app.installTranslator(&translator);
 
     MyMainWindow window;

@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 QFileInfo myFileInfo(const QString &fn);
 QString myDirName(const QString &fn);
 QString myStatusDir(const QString &fn);
+void setCurrentAppDir();
 
 QString fileContent(const QString &fn, const QString &codec = "cp1251");
 QString fileContent(QFile &fl, const QString &codec = "cp1251");
