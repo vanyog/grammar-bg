@@ -3,3 +3,10 @@ data
 grammar-bg.pro.user.*
 help
 roots-idi.dat
+.qmake.stash
+.vs/
+debug/
+grammar-bg.vcxproj
+grammar-bg.vcxproj.filters
+grammar-bg.vcxproj.user
+release/
